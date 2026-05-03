@@ -1,27 +1,28 @@
 package de.htw_berlin.wtprojekt;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/workouts")
 public class WorkoutController {
 
-    @GetMapping("/")
-    public String test() {
-        return "Hello World";
+    @Autowired
+    private WorkoutRepository repository;
+
+    @GetMapping
+    public List<Workout> getAllWorkouts() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
-    @GetMapping("/workouts")
-    public List<Workout> getAllWorkouts() {
-        return List.of(
-                new Workout("Dips", 3),
-                new Workout("Liegestütze", 4),
-                new Workout("Bizeps-Curls", 3),
-                new Workout("Klimmzüge", 3)
-        );
+    @PostMapping
+    public Workout createWorkout(@RequestBody Workout workout) {
+        return repository.save(workout);
     }
 }

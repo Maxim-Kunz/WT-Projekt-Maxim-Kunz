@@ -1,22 +1,39 @@
 package de.htw_berlin.wtprojekt;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Workout {
-    private String exerciseName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
     private int sets;
 
     public Workout() {}
 
-    public Workout(String exerciseName, int sets) {
-        this.exerciseName = exerciseName;
+    public Workout(String name, int sets) {
+        this.name = name;
         this.sets = sets;
     }
 
-    public String getExerciseName() {
-        return exerciseName;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName = exerciseName;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getSets() {
