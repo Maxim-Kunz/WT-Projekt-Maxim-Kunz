@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Workout {
@@ -11,15 +12,19 @@ public class Workout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDate date;
 
     private String name;
     private int sets;
 
-    public Workout() {}
+    public Workout() {
+        this.date = LocalDate.now();
+    }
 
     public Workout(String name, int sets) {
         this.name = name;
         this.sets = sets;
+        this.date = LocalDate.now();
     }
 
 
@@ -43,4 +48,6 @@ public class Workout {
     public void setSets(int sets) {
         this.sets = sets;
     }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
 }
