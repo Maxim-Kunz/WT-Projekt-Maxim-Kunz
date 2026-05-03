@@ -1,9 +1,8 @@
 package de.htw_berlin.wtprojekt;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -14,7 +13,9 @@ public class Workout {
     private Long id;
     private LocalDate date;
 
+    @NotBlank(message = "Der Übungsname darf nicht leer sein")
     private String name;
+    @Min(value = 1, message = "Es muss mindestens 1 Satz absolviert werden")
     private int sets;
 
     public Workout() {
