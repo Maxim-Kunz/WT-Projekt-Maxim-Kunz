@@ -21,12 +21,12 @@ class WorkoutControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private WorkoutRepository repository;
+    private WorkoutService service;
 
     @Test
     void shouldReturnWorkoutsList() throws Exception {
         Workout testWorkout = new Workout("Klimmzüge", 3);
-        when(repository.findAll()).thenReturn(List.of(testWorkout));
+        when(service.getAllWorkouts()).thenReturn(List.of(testWorkout));
         mockMvc.perform(get("/workouts"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -35,7 +35,7 @@ class WorkoutControllerTest {
     @Test
     void shouldCreateWorkout() throws Exception {
         Workout savedWorkout = new Workout("Liegestütze", 4);
-        when(repository.save(org.mockito.ArgumentMatchers.any(Workout.class))).thenReturn(savedWorkout);
+        when(service.save(org.mockito.ArgumentMatchers.any(Workout.class))).thenReturn(savedWorkout);
         String jsonPayload = "{\"name\":\"Liegestütze\", \"sets\":4}";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/workouts")
                         .contentType(MediaType.APPLICATION_JSON)
